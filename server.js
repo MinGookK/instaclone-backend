@@ -20,6 +20,7 @@ const typeDefs = gql`
   type Mutation {
     createMovie(title: String!, year: Int!, genre: String): Movie
     deleteMovie(id: Int!): Movie
+    updateMovie(id: Int! year: Int!): Movie
   }
 `;
 
@@ -43,8 +44,12 @@ const resolvers = {
       where: {
         id
       }
+    }),
+    updateMovie: (_, {id, year}) => client.movie.update({
+      where: { id }, data: { year }
     })
   },
+  
 };
 
 const server = new ApolloServer({
