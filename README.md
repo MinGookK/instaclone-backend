@@ -30,10 +30,27 @@ Instaclone Backend
 
 ## GraphQL
 
+### Prisma랑 사용할 때 신경써주어야 할 것
+
+1. GraphQL의 type definitions와 Prisma의 schema가 일치해야 함
+2. 이 때 GraphQL은 기본값이 선택이고 필수인 값에 !를 붙여야 함
+3. Prisma는 반대로 기본값이 필수이고 선택인 값에 ?를 붙여야 함
+
 ## Prisma (https://www.prisma.io/)
 
 ORM(Object Relational Mapper)이다. SQL 코드를 쓸 필요 없이 JS코드를 작성하면 대신 DB랑 소통을 해준다.
 JS,) TS 지원하는 중
+
+datasource 는 Prisma에게 데이터베이스의 주소와 종류에 대해 알려줌.
+이 프로젝트에서는 provider는 postgresql / database url은 env파일 통해서 읽어오도록 함.(database 생성은 postgres app 사용했음)
+
+client는 어떻게 db랑 상호작용하는가 에 대한 것.
+
+### Prisma Migrate
+
+schema.prisma 파일의 데이터모델을 쓰고 설명할 수 있게 해 줌.
+`npx prisma migrate dev --name [마이그레이션 이름]`
+사용해서 migrate 해줄 수 있다.
 
 ## Postgresql
 
