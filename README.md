@@ -30,6 +30,15 @@ Instaclone Backend
 
 ## GraphQL
 
+### GraphQL tools
+
+GraphQL tools 가 movies 폴더에서 typeDefs, resolvers를 합쳐주는 역할을 함
+`npm i graphql-tools`
+
+> 강의에서 loadFileSync를 사용해서 resolver, typeDef를 추출해냈는데 최신판에서는 이게 없어진 것 같다.
+> npm istall graphql-tools@7.0.2 설치해주자
+> 없어진 상태에서는 queries와 mutations를 어떻게 나눠줄 수 있을까?
+
 ### Prisma랑 사용할 때 신경써주어야 할 것
 
 1. GraphQL의 type definitions와 Prisma의 schema가 일치해야 함
