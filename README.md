@@ -46,6 +46,13 @@ datasource 는 Prisma에게 데이터베이스의 주소와 종류에 대해 알
 
 client는 어떻게 db랑 상호작용하는가 에 대한 것.
 
+### Prisma Studio
+
+`npx prisma studio`
+
+Prisma schema를 분석해서 작성한 model을 데이터베이스를 자동으로 시각화 해줌
+CRUD, filter 등 아무 어플리케이션 없이 구현되어있음
+
 ### Prisma Migrate
 
 schema.prisma 파일의 데이터모델을 쓰고 설명할 수 있게 해 줌.
