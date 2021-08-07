@@ -39,6 +39,8 @@ GraphQL tools 가 movies 폴더에서 typeDefs, resolvers를 합쳐주는 역할
 > npm istall graphql-tools@7.0.2 설치해주자
 > 없어진 상태에서는 queries와 mutations를 어떻게 나눠줄 수 있을까?
 
+loadFileSync 는 export default 를 불러오기 때문에 반드시 export default로 작성해주자.
+
 ### Prisma랑 사용할 때 신경써주어야 할 것
 
 1. GraphQL의 type definitions와 Prisma의 schema가 일치해야 함
@@ -72,3 +74,12 @@ schema.prisma 파일의 데이터모델을 쓰고 설명할 수 있게 해 줌.
 
 Database
 나는 MAC 을 사용하기 때문에 postgres app을 다운로드하여 사용함.
+
+## env
+
+.env 읽기 위해 dotenv 사용
+
+`require('dotenv').config();`
+
+사용해서 불러오는 동시에 실행시켜 주면 됨.
+이러면 `process.env.[env 변수이름]` 형식으로 env값을 불러올 수 있게 됨
