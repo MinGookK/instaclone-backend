@@ -7,7 +7,7 @@ import {
 } from 'graphql-tools'
 
 const loadTypes= loadFilesSync(`${__dirname}/**/*.typeDefs.js`);
-const loadResolvers= loadFilesSync(`${__dirname}/**/*.{queries,mutations}.js`);
+const loadResolvers= loadFilesSync(`${__dirname}/**/*.resolvers.js`);
 
 const typeDefs = mergeTypeDefs(loadTypes);
 const resolvers = mergeResolvers(loadResolvers);

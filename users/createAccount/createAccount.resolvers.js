@@ -1,4 +1,4 @@
-import client from '../client'
+import client from '../../client';
 import * as bcrypt from 'bcrypt'
 
 export default {
@@ -34,27 +34,5 @@ export default {
         return e;
       }
     },
-    login: async (_, {username, password}) => {
-      const user = await client.user.findUnique({where:{username}});
-      if(!user){
-        return {
-          ok: false,
-          error: "username 을 찾을 수 없습니다."
-        }
-      }
-      const pass = await bcrypt.compare(password, user.password);
-      if(pass){
-        return{
-          ok: true,
-          token: "성공이에용~, 토큰발급코드 넣기"
-        }
-      }
-      if(!pass){
-        return{
-          ok: false,
-          error: "잘못된 비밀번호입니다. 다시 입력해주세요."
-        }
-      }
-    }
   }
 }
