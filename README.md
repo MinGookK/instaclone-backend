@@ -9,8 +9,8 @@ Instaclone Backend
 
 ## User
 
-- [ ] Create Account
-- [ ] See Profile
+- [x] Create Account
+- [x] See Profile
 - [ ] Login
 - [ ] Edit Profile
 - [ ] Follow User
@@ -67,6 +67,30 @@ datasource 는 Prisma에게 데이터베이스의 주소와 종류에 대해 알
 
 client는 어떻게 db랑 상호작용하는가 에 대한 것.
 
+### Prisma Client
+
+db를 생성하고 연결해줬으면 이제 그 db를 조회하거나 추가하는 CRUD를 할 수 있어야 하잖아?
+이 때 db와 소통하는 다리 역할로 Prism a Client를 쓸 수 있음.
+
+```javascript
+import { PrismaClient } from '@prisma/client';
+
+const client = new PrismaClient();
+
+export default client;
+```
+
+와 너무 쉽다! ㅋㅋㅋ 이렇게 불러와주고 resolvers에서 client를 통해서 db와 소통하면 됨.
+
+#### 함수 사용 방법
+
+그냥 client.[추가하려는 모델].[Prisma Client 함수](~~)
+같이 쓰면 되는데, 함수 내부 채우는 건 함수 위에 마우스 올려두면 친절하게 설명해주니까 그대로 작성하면 된다.
+
+이때 특정 조건을 만족하는 db를 찾을 때, where을 쓰게 되는데
+그 안에 OR: (하나라도 만족하면), NOT: (전부 false라면), AND: (전부 true라면) 등을 추가해서 원하는 필터링을 만들어 줄 수 있다.
+자세한 사용 방법은 Prisma client doc에서 확인해보자.
+
 ### Prisma Studio
 
 `npx prisma studio`
@@ -80,12 +104,24 @@ schema.prisma 파일의 데이터모델을 쓰고 설명할 수 있게 해 줌.
 `npx prisma migrate dev --name [마이그레이션 이름]`
 사용해서 migrate 해줄 수 있다.
 
+> Added the required column `x` to the `y` table without a default value. There are `z` rows in this table, it is not possible to execute this migration.
+>
+> 1. Create a migration with a model and some columns.
+> 2. Add a NON NULLABLE column to that model.
+> 3. Save the changes and run the migration.
+> 4. See error.
+
+> 봐도 뭔지 모르겠어서 prisma init을 다시 해주었더니 동일코드에서 정상적으로 돌아간다.. 무엇이 문제였던 걸까?..
+
 ## Postgresql
 
 Database
 나는 MAC 을 사용하기 때문에 postgres app을 다운로드하여 사용함.
 
 > postico 랑 커맨드 사용하는게 설명이 넘 부족하다. 알게 된 사실을 추가로 적도록 하자.
+> open postgres -> postgres click -> terminal 열림 -> DROP DATABASE [지울 데이터베이스 이름] or CREATE DATABASE [생성할 데이터베이스 이름] -> 소유자(owner)가 postgres인 [데이터베이스 이름]을 가진 데이터베이스가 생성됨.
+
+> 물론 소유자를 바꾸고 싶다면 postgres가 아닌 유저네임을 클릭해도 되고 자유다.
 
 ## env
 
@@ -95,3 +131,8 @@ Database
 
 사용해서 불러오는 동시에 실행시켜 주면 됨.
 이러면 `process.env.[env 변수이름]` 형식으로 env값을 불러올 수 있게 됨
+
+## bcrypt
+
+password hasing을 해주는 라이브러리 salt도 쳐준다.
+레인보우 테이블 공격을 막아주는 역할을 함

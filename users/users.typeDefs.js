@@ -22,6 +22,6 @@ export default gql`
   }
 
   type Query {
-    seeProfile(username: String): User
+    seeProfile(username: String!): User
   }
 `

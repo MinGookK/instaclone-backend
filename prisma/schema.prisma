@@ -10,10 +10,8 @@ generator client {
   provider = "prisma-client-js"
 }
 
-// 필요할 때마다 필드 추가하기
 model User {
   id        Int      @id @default(autoincrement())
-  // Create User에 필요한거
   firstName String
   lastName  String?
   username  String   @unique
