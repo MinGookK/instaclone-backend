@@ -3,9 +3,19 @@
 Nomard coder Insta 클론코딩 클래스 따라해보기임.
 무지성으로 따라하지 말고 궁금한 것, 기억할 것이 생기면 README에 추가하고 결론을 적어도보도록 하자.
 
-# Instaclone
+# Instaclone (Todo)
 
 Instaclone Backend
+
+## User
+
+- [ ] Create Account
+- [ ] See Profile
+- [ ] Login
+- [ ] Edit Profile
+- [ ] Follow User
+- [ ] Unfollow User
+- [ ] Change Avatar (Image Upload)
 
 > ### nodemon 쓰는 이유
 >
@@ -74,6 +84,8 @@ schema.prisma 파일의 데이터모델을 쓰고 설명할 수 있게 해 줌.
 
 Database
 나는 MAC 을 사용하기 때문에 postgres app을 다운로드하여 사용함.
+
+> postico 랑 커맨드 사용하는게 설명이 넘 부족하다. 알게 된 사실을 추가로 적도록 하자.
 
 ## env
 
