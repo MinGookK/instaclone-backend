@@ -3,6 +3,92 @@
 Nomard coder Insta 클론코딩 클래스 따라해보기임.
 무지성으로 따라하지 말고 궁금한 것, 기억할 것이 생기면 README에 추가하고 결론을 적어도보도록 하자.
 
+# 알게된 잡지식들
+
+## 1. Promise & await
+
+이거 진짜 너무 쉬운건데 자꾸 실수해서 적는다.
+내가 어떤 라이브러리를 사용해서 어떤 함수를 사용한다고 하자.
+
+이때 그냥 무지성으로 함수 찍고 넘어가는 경우가 많은데, 그러지 말고 사용하기 전에 사용하려는 함수에 마우스 커서를 살포시 올려놓아 보자.
+그럼 친절하게 무슨 형태로 리턴되는지 알려준다. Promise로 반환된다면 비동기 처리를 고려해야된다. 씨바!! 제발 좀.
+이렇게 안하고 뒷부분 주르륵 코딩하면 뭐에서 잘못되었는지 알 수 가 없다.
+async / await 구문 써서 함수가 성공적으로 실행되는 것을 기다려주자.
+
+코드 한줄 한줄 테스트 해보며 해도 되지만 이정도는 코드 쓰기 전에 확인하는 습관을 들여보자.
+
+> 실수했던 코드
+
+```javascript
+//bcrypt는 password를 hash할 때 쓰이는 라이브러리로 hash 함수는 Promise를 반환한다.
+let hashedPassword = null;
+if (newPassword) {
+  hashedPassword = await bcrypt.hash(newPassword, 10);
+}
+```
+
+## 2. 객체 내부에서 조건문 사용하기
+
+유저 정보를 업데이트 하는 상황에서 받은 정보를 바탕으로 데이터 객체를 서버로 넘겨주어야 할 것이다.
+이 때, 조건에 따라 값을 넘겨주거나 넘겨주지 않고 싶다면 어떻게 해야 할까? 이럴 때 사용하는 코드 되시겠다~
+
+```javascript
+//password를 바꾼다면 hash해서 넘겨줘야 함
+let hashedPassword = null;
+if (newPassword) {
+  hashedPassword = await bcrypt.hash(newPassword, 10);
+}
+
+//editProfile에서 넘겨준 데이터로 user를 업데이트 해줘야 함
+const updateUser = await client.user.update({
+  where: { id: 1 },
+  data: {
+    firstName,
+    lastName,
+    username,
+    email,
+    ...(hashedPassword && { password: hashedPassword }),
+  },
+});
+```
+
+위의 코드에서 나는 2가지 문제가 있었다.
+
+1. password를 hash화 해야 했다.
+2. hashedPassword가 있는 경우에만 password 값을 hashedPassword로 보내고 싶었다.
+
+`...(hashedPassword && { password: hashedPassword }),`
+결론은 이렇게 작성하면 된다.
+풀어쓰자면,
+
+1. ()로 감싸 조건문을 만든다.
+2. hashedPassword가 `true`라면(있다면) `{ password: hashedPassword }`가 된다.
+3. `...`(spread operator)를 앞에 붙여 객체를 푼다.
+4. `password: hashedPassword`가 된다.
+
+> 애초에 조건문 없이 코드 작성도 가능 할 것 같아 고쳐봄
+
+```javascript
+//이전에는 기본값이 null이었는데 이러면 password 필드에 null이 들어갈 수 없어 오류가 뜬다.
+//그래서 undefied로 바꾸니까 잘된다.
+let hashedPassword = undefined;
+if (newPassword) {
+  hashedPassword = await bcrypt.hash(newPassword, 10);
+}
+
+const updateUser = await client.user.update({
+  where: { id: 1 },
+  data: {
+    firstName,
+    lastName,
+    username,
+    email,
+    password: hashedPassword,
+    // ...(hashedPassword && { password: hashedPassword }),
+  },
+});
+```
+
 # Instaclone (Todo)
 
 Instaclone Backend
@@ -81,6 +167,9 @@ export default client;
 ```
 
 와 너무 쉽다! ㅋㅋㅋ 이렇게 불러와주고 resolvers에서 client를 통해서 db와 소통하면 됨.
+
+> Prisma 를 통해 undefined를 전송하면 어떻게 될까?
+> 아무것도 전송하지 않는다. 따라서 업데이트를 해줄 때 undefined를 전송한다고 원래 있던 데이터가 undefined로 바뀌지 않는다.
 
 #### 함수 사용 방법
 
