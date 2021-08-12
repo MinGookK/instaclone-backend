@@ -225,3 +225,45 @@ Database
 
 password hasing을 해주는 라이브러리 salt도 쳐준다.
 레인보우 테이블 공격을 막아주는 역할을 함
+
+## jwt(json web token)
+
+login 구현할 때 사용.
+사용자가 로그인에 성공하면 secret은 아니지만 사용자의 고유한 정보인 정보 + 서버의 secret key를 이용해 토큰을 부여함.
+
+사용자가 서버에 무언가 request를 보낼 때 마다 이 토큰과 함께 요청을 함.
+
+서버에서는 사용자가 보낸 토큰을 보고 서버의 secret key로 sign되고 변경되지 않은 토큰인지 verify함.
+사용자의 요청을 받아줌.
+
+**하지만 매번 모든 api에 토큰을 arg로 보내도록 하는 것은 매우 귀찮아 보인다**
+그래서 사용할 것은,
+
+### http headers
+
+response, request 등에 자동으로 포함되도록 만들 수 있음!
+header에 token 정보를 담고 request 해보면 header에는 잘 나오지만 graphql 내에서 읽을 수 없어 에러가 날 것이다.
+
+이유는 우리가 graphql resolver에서 (root, {arguments})만 사용하고 있었기 때문,
+그 다음 요소인 context를 사용해주어야 한다.
+
+> 마지막 요소인 info는 무슨역할인지 모르겠다. 찾아보자.
+
+#### context
+
+context는 graphql resolver의 세번째 arg로 등록해놓으면 어~~~~느 resolver던지 접근해서 사용할 수 있도록 한 arg다.
+로그인을 통해 token이 나오면 어~~떤 요청을 할때든지 토큰을 전달해야 되는 상황과 비슷하지 않은가?ㅋㅋ
+
+아무튼 context의 생성은 Apollo server에서 생성이 가능하다.
+
+```javascript
+const server = new ApolloServer({
+  schema
+  context: object or function
+});
+```
+
+위와 같이 서버에서 context를 등록해두면 각각의 resolver에서 자연스럽게 정보를 빼서 사용하면 된다.
+우리 경우에는 http header에 토큰 정보를 저장하니 context는 http header와 연동이 되면 되겠다.
+
+context를 함수로 사용하면 시작 변수로 request와 resolver를 받을 수 있다. request 보면 http header가 있으니까 그걸 사용한 함수를 만들면 된다.

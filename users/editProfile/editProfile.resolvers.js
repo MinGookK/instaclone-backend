@@ -1,10 +1,10 @@
 import client from '../../client'
 import * as bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken';
 
 export default {
   Mutation: {
-    editProfile: async (_, {firstName, lastName, username, email, password: newPassword}) => {
-    
+    editProfile: async (_, {firstName, lastName, username, email, password: newPassword}, {loggedInUser}) => {
       //password를 바꾼다면 hash해서 넘겨줘야 함
       let hashedPassword = undefined;
       if(newPassword){
@@ -13,7 +13,7 @@ export default {
 
       //editProfile에서 넘겨준 데이터로 user를 업데이트 해줘야 함
       const updateUser = await client.user.update({
-        where:{id: 1},
+        where:{id: loggedInUser.id},
         data:{
           firstName, 
           lastName, 
@@ -34,7 +34,7 @@ export default {
           error: 'Could not update user'
         }
       }
-      //token으로 어떤 사용자를 바꿀 것인지 추가 필요
+
     }
   }
 }
