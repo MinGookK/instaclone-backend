@@ -6,8 +6,6 @@ export default gql`
     error: String
   }
 
-  scalar Upload
-
   type Mutation{
     editProfile(
       firstName: String
@@ -16,7 +14,6 @@ export default gql`
       email: String
       password: String
       bio: String
-      avartar: Upload
     ): editProfileResult
   }
 `

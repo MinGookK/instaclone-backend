@@ -1,12 +1,13 @@
 import client from '../../client'
 import * as bcrypt from 'bcrypt'
 import { protectedResolver } from '../users.utils';
-import {GraphQLUpload, graphqlUploadExpress} from 'graphql-upload'
 
 export default {
   Mutation: {
-    editProfile: protectedResolver(async (_, {firstName, lastName, username, email, password: newPassword, bio, avartar}, {loggedInUser}) => {
-
+    editProfile: protectedResolver(async (_, 
+      {firstName, lastName, username, email, password: newPassword, bio}, 
+      {loggedInUser}) => 
+      {
       console.log(avartar);
 
       //password를 바꾼다면 hash해서 넘겨줘야 함
@@ -26,7 +27,6 @@ export default {
           password: hashedPassword,
           // ...(hashedPassword && { password: hashedPassword }),
           bio,
-          avartar
         },
       });
       //update 되었으면 return 해주기
