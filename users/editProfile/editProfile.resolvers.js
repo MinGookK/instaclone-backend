@@ -8,7 +8,6 @@ export default {
       {firstName, lastName, username, email, password: newPassword, bio}, 
       {loggedInUser}) => 
       {
-      console.log(avartar);
 
       //password를 바꾼다면 hash해서 넘겨줘야 함
       let hashedPassword = undefined;
