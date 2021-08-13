@@ -31,7 +31,10 @@ export default {
           password: hashedPassword
         }});
       }catch(e){
-        return e;
+        return {
+          ok: false,
+          error: "Could not create Account"
+        };
       }
     },
   }

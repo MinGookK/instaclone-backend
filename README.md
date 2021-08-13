@@ -255,6 +255,31 @@ datasource 는 Prisma에게 데이터베이스의 주소와 종류에 대해 알
 
 client는 어떻게 db랑 상호작용하는가 에 대한 것.
 
+### model에 관계 등록하기(https://www.prisma.io/docs/concepts/components/prisma-schema/relations)
+
+관계형 데이터베이스를 구축하는 방법.
+
+#### 1:1 database
+
+> To create a one-to-one self-relation:
+> Both sides of the relation must define a @relation attribute that share the same name - in this case, BlogOwnerHistory.
+> One relation field must be a fully annotated. In this example, the successor field defines both the field and references arguments.
+> One relation field must be backed by a foreign key. The successor field is backed by the successorId foreign key, which references a value in the id field.
+
+fully annotated가 무슨뜻 인지 잘 모르겠다.
+
+```js
+model User {
+  id          Int     @default(autoincrement()) @id
+  name        String?
+  successorId Int?
+  successor   User?   @relation("BlogOwnerHistory", fields: [successorId], references: [id])
+  predecessor User?   @relation("BlogOwnerHistory")
+}
+```
+
+아무튼 model에서 relation을 정의할 때 1:1 연결될 data를 같은 이름으로 묶어주면 간단하게 데이터베이스가 생성된다.
+
 ### Prisma Client
 
 db를 생성하고 연결해줬으면 이제 그 db를 조회하거나 추가하는 CRUD를 할 수 있어야 하잖아?
