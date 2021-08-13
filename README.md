@@ -142,10 +142,57 @@ Instaclone Backend
 
 ### Graphql upload(https://www.apollographql.com/blog/graphql/file-uploads/with-react-hooks-typescript-amazon-s3-tutorial/)
 
+> 일단은 다운그레이드 버전으로 진행을 한다. (apollo server 2.x)
+
+file upload할 때 Upload형 sclar는 알아서 선언된다.
+Upload 를 통해 받아온 file은 Promise 형태로 받아와진다.
+
+예시)
+
+```javascript
+Promise{
+  {
+    filename: 'asdfasdf',
+    mimetype: 'image/jpeg',
+    encoding: '7bit',
+    createReadStream: [Function: createReadStream]
+  }
+}
+```
+
+createReadStream 은 node.js에서 온 함수, 파일을 읽을 수 있도록 해줌
+이 중 내가 filename과 createReadStream이 필요하다면 어떻게 해야 할까?
+
+```javascript
+const { filename, createReadStream } = await file;
+```
+
+와 같이 await를 사용해 Promise가 반환될 때 까지 기다려 주어야 하겠다.
+
+#### stream
+
+많은 데이터를 강에 비유한 것.
+위의 예제에서 createReadStream은 업로드한 파일의 정보를 읽는 함수이다.
+내가 업로드 한 파일의 정보를 보고싶다면
+
+```javascript
+const stream = createReadStream();
+```
+
+으로 한 번 호출해주면 된다.
+
+이제 강(stream)을 볼 수 있게 되었으니 흐르는 물(데이터)을 우리가 원하는 위치로 옮겨줄 pipe(파이프)가 필요하다.
+
+`const writeStream = fs.createWriteStream(경로 설정)`
+
+이후에,
+`stream.pipe(writeStream)` 해주면 받아온 파일이 writeStream에서 설정한 경로로 저장이 된다.
+
 > Apollo Server 2.0 버전에서는 즉시 파일 업로드가 가능했었다. 그런데 쉬벌 3.0 업데이트 되고부터는 바로 되지 않고 스스로 setup을 해야 한단다.
 > 그 이유는,
 > **많은 양의 binary data를 처리하게 되어서 성능이 저하되기 때문**이라고 한다.
 > 처음 배우는 입장에서는 그냥 성능 저하되고 편한길을 가고 싶지만 이렇게 업데이트 된 데에는 이유가 있겠지, 최신 버전으로 작성하는 법을 공부해보자.
+> 는 나중에 해보자 stream , fs 등 다룰게 너무 많다 미루자 ㅠㅠ
 
 #### Graphql File upload 방식 (https://www.apollographql.com/blog/backend/file-uploads/file-upload-best-practices/)
 

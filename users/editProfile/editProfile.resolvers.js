@@ -1,13 +1,18 @@
 import client from '../../client'
 import * as bcrypt from 'bcrypt'
 import { protectedResolver } from '../users.utils';
+import fs from 'fs'
 
 export default {
   Mutation: {
     editProfile: protectedResolver(async (_, 
       {firstName, lastName, username, email, password: newPassword, bio, avatar}, 
       {loggedInUser}) => {
-        console.log(avatar);
+        const {filename, createReadStream} = await avatar;
+        const readStream = createReadStream();
+        const writeStream = fs.createWriteStream(process.cwd()+"/uploads/" + filename);
+        readStream.pipe(writeStream);
+
         //password를 바꾼다면 hash해서 넘겨줘야 함
         let hashedPassword = undefined;
         if(newPassword){
