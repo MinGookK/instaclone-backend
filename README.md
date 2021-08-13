@@ -112,7 +112,7 @@ Instaclone Backend
 - [x] Create Account
 - [x] See Profile
 - [x] Login
-- [ ] Edit Profile
+- [x] Edit Profile
 - [ ] Follow User
 - [ ] Unfollow User
 - [ ] Change Avatar (Image Upload)
@@ -139,6 +139,17 @@ Instaclone Backend
 > 실제 배포될 때는 불필요하므로 개발환경에서만 쓰기 때문에 --save-dev로 install한다.
 
 ## GraphQL
+
+### graphql apollo express
+
+graphql로 완벽히 개발된 api에서는 apollo 만으로 충분하지만, rest나 soket IO를 실시간으로 사용하는 경우도 생길 것임.
+그럴 경우에는 apollo가 모든 것을 자동으로 생성하고 있기 때문에 자유롭게 나머지 기능을 사용할 수 없게 됨.
+request log를 찍기 등..
+
+따라서 이런 기능이 필요할 경우에 express server를 만든 뒤에 apollo를 얹어주는 방식으로 사용이 가능하다.
+
+> middle ware와 같은 개념인 듯. 기본적으로 Apollo server를 사용하지만 Apollo server가 사작되기 전에 express server를 끼워넣음으로서
+> 여러가지 세세한 서버와의 소통을 할 수 있도록 만든 것 같음
 
 ### Graphql upload(https://www.apollographql.com/blog/graphql/file-uploads/with-react-hooks-typescript-amazon-s3-tutorial/)
 

@@ -8,10 +8,15 @@ export default {
     editProfile: protectedResolver(async (_, 
       {firstName, lastName, username, email, password: newPassword, bio, avatar}, 
       {loggedInUser}) => {
-        const {filename, createReadStream} = await avatar;
-        const readStream = createReadStream();
-        const writeStream = fs.createWriteStream(process.cwd()+"/uploads/" + filename);
-        readStream.pipe(writeStream);
+        let avatarUrl = undefined;
+        if(avatar){
+          const {filename, createReadStream} = await avatar;
+          const newFileName = `${loggedInUser.id}-${Date.now()}-${filename}`
+          const readStream = createReadStream();
+          const writeStream = fs.createWriteStream(process.cwd()+"/uploads/" + newFileName);
+          readStream.pipe(writeStream);
+          avatarUrl = `http://localhost:4000/static/${newFileName}`
+        }
 
         //password를 바꾼다면 hash해서 넘겨줘야 함
         let hashedPassword = undefined;
@@ -29,6 +34,7 @@ export default {
             email,
             password: hashedPassword,
             // ...(hashedPassword && { password: hashedPassword }),
+            avatar: avatarUrl,
             bio,
           },
         });
