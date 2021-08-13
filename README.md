@@ -3,6 +3,12 @@
 Nomard coder Insta 클론코딩 클래스 따라해보기임.
 무지성으로 따라하지 말고 궁금한 것, 기억할 것이 생기면 README에 추가하고 결론을 적어도보도록 하자.
 
+# 알아봐야 될 것
+
+1. 클라이언트, 벡엔드 연결되어 있으면 쿠키 세션을 많이 쓴대, 떨어져있을 때는 토큰을 많이쓴대 뭔차인지 알아보자
+2. currying
+3. graphql upload 업데이트 되어서 scalar Upload 더이상 자동생성되지 않음. fs 모듈로 직접 설정해야 한다는데 알아봐야 함.
+
 # 알게된 잡지식들
 
 ## 1. Promise & await
@@ -89,6 +95,14 @@ const updateUser = await client.user.update({
 });
 ```
 
+## 3. Currying
+
+함수를 리턴하는 함수 basic
+이용하면 함수를 리턴하는 함수 같은 거 만들 수 있음.
+
+예를 들면, 처음에 받는 arg 값에 따라 다른 함수가 리턴되도록 만들 수 있음
+a(1)(2)와 같은 함수를 만들 수 있음
+
 # Instaclone (Todo)
 
 Instaclone Backend
@@ -125,6 +139,36 @@ Instaclone Backend
 > 실제 배포될 때는 불필요하므로 개발환경에서만 쓰기 때문에 --save-dev로 install한다.
 
 ## GraphQL
+
+### Graphql upload(https://www.apollographql.com/blog/graphql/file-uploads/with-react-hooks-typescript-amazon-s3-tutorial/)
+
+> Apollo Server 2.0 버전에서는 즉시 파일 업로드가 가능했었다. 그런데 쉬벌 3.0 업데이트 되고부터는 바로 되지 않고 스스로 setup을 해야 한단다.
+> 그 이유는,
+> **많은 양의 binary data를 처리하게 되어서 성능이 저하되기 때문**이라고 한다.
+> 처음 배우는 입장에서는 그냥 성능 저하되고 편한길을 가고 싶지만 이렇게 업데이트 된 데에는 이유가 있겠지, 최신 버전으로 작성하는 법을 공부해보자.
+
+#### Graphql File upload 방식 (https://www.apollographql.com/blog/backend/file-uploads/file-upload-best-practices/)
+
+#### 1. Multipart Upload Requests
+
+단일 요청에서 사양을 통해 텍스트, 파일 데이터, JSON 개체 및 기타 원하는 것을 보낼 수 있다.
+한 번의 요청으로 모든 것을 할 수 있는 방법!
+mutation, query 등을 원하는 형태로 한번에 보낸다는 개념 자체가 graphql의 기본 개념과 아주 비슷함.
+
+쉽지만, 단점은
+파일 업로드는 GraphQL 서버에 많은 스트레스를 주므로 무거운 작업을 처리하는 것보다 백엔드 서비스에 대한 프록시로 사용하는 것이 좋습니다.
+라고 함
+
+![multipart upload request](https://wp.apollographql.com/wp-content/uploads/2020/03/1_ZzL2m6Zny0d3ysHqLiig-A@2x-2048x1798.png)
+
+#### 2. signed URLs
+
+직접 업로드 할 수 있도록 설계된 것 더 빠르고 확장성 있음
+
+### Altair
+
+playground의 pro버전??.. 같은 느낌이다. (file) upload type을 테스트 해볼 수 있다.
+upload type 사용법: https://www.apollographql.com/blog/graphql/file-uploads/with-apollo-server-2-0/
 
 ### GraphQL tools
 
@@ -237,6 +281,7 @@ login 구현할 때 사용.
 사용자의 요청을 받아줌.
 
 **하지만 매번 모든 api에 토큰을 arg로 보내도록 하는 것은 매우 귀찮아 보인다**
+
 그래서 사용할 것은,
 
 ### http headers

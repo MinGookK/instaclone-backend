@@ -25,6 +25,7 @@
     "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
     "graphql-tools": "^7.0.2",
+    "graphql-upload": "^12.0.0",
     "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
