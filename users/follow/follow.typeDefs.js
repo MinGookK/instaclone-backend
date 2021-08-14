@@ -8,6 +8,6 @@ export default gql`
   type Mutation{
     followUser(
       username: String!
-    ): followUserResult
+    ): followUserResult!
   }
 `
