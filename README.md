@@ -113,8 +113,10 @@ Instaclone Backend
 - [x] See Profile
 - [x] Login
 - [x] Edit Profile
-- [ ] Follow User
-- [ ] Unfollow User
+- [x] Follow User
+- [x] Unfollow User
+- [ ] See Followers & Following with Pagination
+- [ ] Computed Field 작성
 - [ ] Change Avatar (Image Upload)
 
 > ### nodemon 쓰는 이유
