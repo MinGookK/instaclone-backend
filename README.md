@@ -103,37 +103,23 @@ const updateUser = await client.user.update({
 예를 들면, 처음에 받는 arg 값에 따라 다른 함수가 리턴되도록 만들 수 있음
 a(1)(2)와 같은 함수를 만들 수 있음
 
-# Instaclone (Todo)
+# Backend 지식
 
-Instaclone Backend
-
-## User
-
-- [x] Create Account
-- [x] See Profile
-- [x] Login
-- [x] Edit Profile
-- [x] Follow User
-- [x] Unfollow User
-- [ ] See Followers & Following with Pagination
-- [ ] Computed Field 작성
-- [ ] Change Avatar (Image Upload)
-
-> ### nodemon 쓰는 이유
+> ## nodemon 쓰는 이유
 >
 > => resolver나 schema를 바꾸게 되면 api 호출 값도 달라져야 하는데, 바뀌었는지 테스트하려면 서버를 kill하고 다시 시작해야 된다.
 > 근데 resolver나 schema가 바뀔때마다 자동으로 서버를 재시작 해준다면 이런 일은 하지 않아도 될 것이다.
 > nodemon은 내 파일이 바뀌는 것을 감시하여 변경점이 보이면 어떤 명령어를 실행하도록 만들 수 있다.
 > **따라서 파일에 변경이 생길 때 마다 서버가 재시작되도록 설정 할 수 있다.**
 
-> ### --save VS --save-dev
+> ## --save VS --save-dev
 >
 > 둘 다 플러그인을 node_modules에 설치한다.
 > --save는 플러그인 정보를 pakage.json의 dependencies 항목에 저정되어 --production 빌드 시에 포함된다.
 > --save-dev 는 플로그인 정보를 pakage.json의 devDependencies에 저장되어 --production 빌드 시 포함되지 않는다.
 > nodemon은 api 개발 시 서버를 자동으로 재시작해주는 도구이므로 --save-dev로 설치해준다.
 
-> ### Babel(https://babeljs.io/)
+> ## Babel(https://babeljs.io/)
 >
 > JS compiler, node version 상관없이 최신 js 문법을 사용할 수 있음 (물론 node.js 말고도 다양한 환경에서 적용할 수 있음)
 > setup에서 node 로 설치해주자.
@@ -331,6 +317,68 @@ schema.prisma 파일의 데이터모델을 쓰고 설명할 수 있게 해 줌.
 
 > 봐도 뭔지 모르겠어서 prisma init을 다시 해주었더니 동일코드에서 정상적으로 돌아간다.. 무엇이 문제였던 걸까?..
 
+### Pagination(https://www.prisma.io/docs/concepts/components/prisma-client/pagination)
+
+Followers 나 Following을 구경하고자 할 때, 엄청 많은 수의 user가 포함되어 있다면 서버에 무리가 갈 것이다.
+그래서 보고싶다고 요청하면 다 보여주는게 아니라 일정부분 보여주고 더 필요하면 그 때 더 로딩하는, 다시말해 페이지를 나누어 로딩해 줄 수 있게 된다.
+
+#### offset pagination
+
+```js
+const results = await prisma.post.findMany({
+  skip: 3,
+  take: 4,
+});
+```
+
+이렇게 skip과 take를 사용하는데,
+skip은 생략하는 data의 갯수이고, take는 보여줄 data의 갯수이다.
+
+원래 나와야 할 결과 값이 1~10까지 있다면 위의 예시에서는 1~3이 skip 되고 결과값으로는 4~7이 표시되게 된다.
+
+이걸 활용하면 페이지를 나누어 로딩해줄 수 있는데 코드를 보자.
+
+```js
+const results = await prisma.post.findMany({
+  skip: 5,
+  take: 5,
+});
+```
+
+```js
+const results = await prisma.post.findMany({
+  skip: 10,
+  take: 5,
+});
+```
+
+다음과 같은 코드가 있다면
+첫 코드는 5개를 skip하고 5개를 표시해주고,
+두번째 코드는 10개를 skip하고 5개를 표시해준다.
+
+어라? 뭔가 페이지가 넘어가는 느낌이 든다 ㅋㅋㅋ.
+만약 내가 원하는 page를 input으로 받았다면
+
+```js
+const results = await prisma.post.findMany({
+  skip: (page - 1) * 5,
+  take: 5,
+});
+```
+
+이렇다면 page 1 일때는 skip하지 않고,
+2일 때는 5개 skip
+3일 때는 10개 skip ... 하면서 목표했던 페이지 분할 로딩 기능이 구현된다.
+
+하지만... offset 방식은 쉬운만큼 치명적인 단점이 있다! ㅋㅋㅋㅋ
+
+> **바로 1,000,000,001번째 부터 5개를 표시하고 싶다면 1,000,000,000개의 데이터를 순환하며 skip해야 한다는 사실이다!ㅋㅋㅋㅋㅋ**
+> 초기 구현에 사용하고 나중에 성능 저하가 확인되기 시작하면 Cursor-based pagination 으로 넘어가야 한다.
+
+#### Cursor-based pagination
+
+추가하자.
+
 ## Postgresql
 
 Database
@@ -397,3 +445,17 @@ const server = new ApolloServer({
 우리 경우에는 http header에 토큰 정보를 저장하니 context는 http header와 연동이 되면 되겠다.
 
 context를 함수로 사용하면 시작 변수로 request와 resolver를 받을 수 있다. request 보면 http header가 있으니까 그걸 사용한 함수를 만들면 된다.
+
+# Instaclone (Todo)
+
+## User
+
+- [x] Create Account
+- [x] See Profile
+- [x] Login
+- [x] Edit Profile
+- [x] Follow User
+- [x] Unfollow User
+- [ ] See Followers & Following with Pagination
+- [ ] Computed Field 작성
+- [ ] Change Avatar (Image Upload)
