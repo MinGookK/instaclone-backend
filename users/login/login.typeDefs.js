@@ -10,6 +10,6 @@ export default gql`
     login(
       username: String!
       password: String!
-    ): loginResult
+    ): loginResult!
   }
 `

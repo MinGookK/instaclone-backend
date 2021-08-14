@@ -243,6 +243,16 @@ datasource 는 Prisma에게 데이터베이스의 주소와 종류에 대해 알
 
 client는 어떻게 db랑 상호작용하는가 에 대한 것.
 
+### some, OR 차이
+
+### select( find할 때 일부 필드만 가져오기 )
+
+```js
+const ok = await client.user.findUnique({ where: { username }, select: { id: true } });
+```
+
+이러면 다 안가져오고 id만 가져올 수 있음
+
 ### model에 관계 등록하기(https://www.prisma.io/docs/concepts/components/prisma-schema/relations)
 
 관계형 데이터베이스를 구축하는 방법.
