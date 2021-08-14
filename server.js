@@ -5,7 +5,7 @@ import logger from 'morgan'
 import {typeDefs, resolvers} from './schema'
 import { getUserByToken } from './users/users.utils';
 
-
+//loggedInUser는 http header 토큰에 해당되는 사용자 데이터를 객체로 return 한다.
 const server = new ApolloServer({
   typeDefs,
   resolvers,
