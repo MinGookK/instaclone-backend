@@ -9,7 +9,7 @@ import { getUserByToken } from './users/users.utils';
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: async({req})=> ({ loggedInUser: await getUserByToken(req.headers.authorization)})
+  context: async({req})=> ({ loggedInUser: await getUserByToken(req.headers.token)})
 });
 
 const PORT = process.env.PORT;

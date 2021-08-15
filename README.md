@@ -387,7 +387,20 @@ const results = await prisma.post.findMany({
 
 #### Cursor-based pagination
 
-추가하자.
+offset pagination에서는 단순하게 skip, take만 지정해주면 됐었다.
+여기서는 cursor라는 변수가 하나 더 추가된다.
+
+설명하자면,
+offset pagination은 맨 앞에서부터 몇 개를 skip할 것인가에 대해서만 로직을 작성하여, page를 입력하면 그 page를 표시해주었다.
+
+cursor-based pagination은
+전에 봤던 페이지의 마지막 데이터가 무엇이었는지(그 데이터의 unique한 값)를 변수로 넘겨준다.
+그렇게 받은 cursor에서 한 개를 skip하고 page를 표시해주는 방식이다.
+
+이러면 원하는 페이지로 바로 넘어가는 것은 구현할 수 없지만,
+필요한 부분만 데이터를 탐색하기 때문에 확장성이 매우 좋아진다.
+
+무한 스크롤 구현할 때 유용한 듯 하다.
 
 ## Postgresql
 
@@ -466,6 +479,6 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] Edit Profile
 - [x] Follow User
 - [x] Unfollow User
-- [ ] See Followers & Following with Pagination
+- [x] See Followers & Following with Pagination
 - [ ] Computed Field 작성
 - [ ] Change Avatar (Image Upload)
