@@ -5,9 +5,8 @@ Nomard coder Insta 클론코딩 클래스 따라해보기임.
 
 # 알아봐야 될 것
 
-1. 클라이언트, 벡엔드 연결되어 있으면 쿠키 세션을 많이 쓴대, 떨어져있을 때는 토큰을 많이쓴대 뭔차인지 알아보자
-2. currying
-3. graphql upload 업데이트 되어서 scalar Upload 더이상 자동생성되지 않음. fs 모듈로 직접 설정해야 한다는데 알아봐야 함.
+1. regular expression
+2. Prisma connectOrCreate
 
 # 알게된 잡지식들
 
@@ -483,3 +482,20 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] Computed Field 작성
 - [x] Change Avatar (Image Upload)
 - [x] Search User
+
+## Photos
+
+- [ ] Upload Photo (Parse #)
+- [ ] See Photo
+- [ ] See Hashtags
+- [ ] Search Photos
+- [ ] Edit Photo
+- [ ] Like / Unlike Photo
+- [ ] See Photo Likes
+- [ ] See Feed
+
+## Comments
+
+- [ ] Comments on Photo
+- [ ] Edit Comment
+- [ ] Delete Comment
