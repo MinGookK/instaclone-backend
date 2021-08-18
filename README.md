@@ -102,6 +102,48 @@ const updateUser = await client.user.update({
 예를 들면, 처음에 받는 arg 값에 따라 다른 함수가 리턴되도록 만들 수 있음
 a(1)(2)와 같은 함수를 만들 수 있음
 
+## 4. include VS computed field
+
+기본적으로 prisma에서는 관계형 데이터베이스를 쿼리로 요구하면 null을 return한다.
+이유는 데이터베이스가 커질 수록 그 쿼리의 양이 너무 방대해서 서버에 무리가 가기 때문이다.
+
+하지만 관계형 데이터가 필요할 때도 있는데 이 때, 두가지 해결방법이 있는데 include와 computed field이다.
+
+```js
+import client from '../../client'
+
+export default {
+  Query:{
+    seePhoto: ( _, {id}) => client.photo.findUnique({where:{id}}, include:{hashtags: true})
+  }
+}
+```
+
+이렇게 애초에 resolver 안에 hashtag를 불러올 수 있도록 include 하는 방법이 첫 번째이고.
+
+```js
+import client from '../client';
+
+export default {
+  Photo: {
+    // Photo의 id를 가져와서 hashtag에 photos에 id가 일치하는게 하나라도 있는 hashtag를 return함
+    hashtags: ({ id }) => client.hashtag.findMany({ where: { photos: { some: { id } } } }),
+  },
+};
+```
+
+따로 hashtags를 위한 computed field를 작성하는 방법이 두번째이다.
+
+얼핏 보기에는 include가 훨씬 쓰기 쉬워 보이는데 computed field를 굳이 작성하는 이유는 뭘까?
+
+내가 생각하는 답은,
+
+1. include를 쓰면 그 값을 불러오든 안오든 항상 데이터를 가져오게 된다. 하지만 computed field를 작성하면 그 값을 호출했을 때만 resolver로 접근해 계산해 내기 때문에 성능적으로 이득이 있다.
+
+2. 단순히 표시가 아니라 추가적인 데이터 정제 과정이 있다면 include로는 표현할 수 없다.
+
+이다.
+
 # Backend 지식
 
 > ## nodemon 쓰는 이유
@@ -485,8 +527,8 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 
 ## Photos
 
-- [ ] Upload Photo (Parse #)
-- [ ] See Photo
+- [x] Upload Photo (Parse #)
+- [x] See Photo
 - [ ] See Hashtags
 - [ ] Search Photos
 - [ ] Edit Photo
