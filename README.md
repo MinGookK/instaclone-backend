@@ -572,7 +572,7 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 
 ## Comments
 
-- [ ] Comments on Photo
+- [x] Comments on Photo
 - [ ] Edit Comment
 - [ ] Delete Comment
 - [ ] See Comments isMine
