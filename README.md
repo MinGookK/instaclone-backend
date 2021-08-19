@@ -565,8 +565,8 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] Search Photos
 - [x] Edit Photo
 - [x] Like / Unlike Photo
-- [ ] See Photo Likes
-- [ ] See Feed
+- [x] See Photo Likes
+- [x] See Feed
 
 ## Comments
 
