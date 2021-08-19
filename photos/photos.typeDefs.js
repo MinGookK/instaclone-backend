@@ -10,6 +10,7 @@ export default gql`
     user: User!
     hashtags: [Hashtag]
     totalLike: Int!
+    isMine: Boolean!
   },
   type Hashtag{
     id: Int!
