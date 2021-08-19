@@ -25,7 +25,7 @@ model User {
   likes     Like[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  Comment   Comment[]
+  comments  Comment[]
 }
 
 model Photo {
@@ -38,7 +38,7 @@ model Photo {
   userId    Int
   hashtags  Hashtag[]
   likes     Like[]
-  Comment   Comment[]
+  comments  Comment[]
 }
 
 model Hashtag {
