@@ -18,4 +18,11 @@ export default gql`
     photos(page: Int!): [Photo]
     totalPhotos: Int!
   }
+  type Like{
+    id: Int!
+    createdAt: String!
+    updatedAt: String!
+    userId: Int!
+    photoId: Int!
+  }
 `

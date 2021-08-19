@@ -9,6 +9,34 @@ Nomard coder Insta 클론코딩 클래스 따라해보기임.
 2. Prisma connectOrCreate
    connect류의 구문에서 배열로 연결 할 것을 전달하면 multiple connect가 가능하다.
    빈 배열을 전달 할 경우에는 아무 상호작용이 일어나지 않는다. (그래서 예외 신경안쓰고 배열로 동적으로 전달해도 된다!!)
+3. 모델을 구성하는 방법
+4. @@unique 설정한 친구들은 count 사용이 불가능하다?..
+
+--혼자 상상해보기--
+like unlike photo면
+
+photo와 user의 관계임.
+
+like에는 user[] 가 있고
+user에도 like[]가 있음
+뭐지?,,,,
+
+그니까 이게 개소리네 ㅋㅋㅋ 이런거 집어치우고
+
+--이게 정답 ㅜㅜ--
+like라는 걸 구현하기 위해 무엇이 필요한지를 생각해야 함.
+
+like를 누르면,
+
+1. like를 누른 user가 저장되어야 함
+2. like를 누른 photo가 저장되어야 함
+   이게 다임.
+
+나머지는 따로 만들어주면 되는 부분임.
+
+4. 복합 unique @@unique[]
+   이거 그냥 따로따로 unique랑 뭐가 다른가 했더니 두개를 합쳐서 다르면 괜찮은거였음.
+   하나는 중복되도 ㄱㅊ
 
 # 알게된 잡지식들
 
@@ -536,7 +564,7 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] See Hashtags
 - [x] Search Photos
 - [x] Edit Photo
-- [ ] Like / Unlike Photo
+- [x] Like / Unlike Photo
 - [ ] See Photo Likes
 - [ ] See Feed
 
