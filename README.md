@@ -7,6 +7,8 @@ Nomard coder Insta 클론코딩 클래스 따라해보기임.
 
 1. regular expression
 2. Prisma connectOrCreate
+   connect류의 구문에서 배열로 연결 할 것을 전달하면 multiple connect가 가능하다.
+   빈 배열을 전달 할 경우에는 아무 상호작용이 일어나지 않는다. (그래서 예외 신경안쓰고 배열로 동적으로 전달해도 된다!!)
 
 # 알게된 잡지식들
 
@@ -143,6 +145,8 @@ export default {
 2. 단순히 표시가 아니라 추가적인 데이터 정제 과정이 있다면 include로는 표현할 수 없다.
 
 이다.
+
+## 5. graphql에서는 field에도 arg가 전달이 가능하다고!?
 
 # Backend 지식
 
@@ -529,9 +533,9 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 
 - [x] Upload Photo (Parse #)
 - [x] See Photo
-- [ ] See Hashtags
-- [ ] Search Photos
-- [ ] Edit Photo
+- [x] See Hashtags
+- [x] Search Photos
+- [x] Edit Photo
 - [ ] Like / Unlike Photo
 - [ ] See Photo Likes
 - [ ] See Feed

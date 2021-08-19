@@ -1,5 +1,6 @@
 import client from '../../client';
 import { protectedResolver } from '../../users/users.utils';
+import { hashtagConnectOrCreate } from '../photos.utils';
 
 export default {
   Mutation: {
@@ -14,15 +15,10 @@ export default {
         }
         // caption에서 hashtag 분리해내기 (reqular expression: String.match();)
         // 한글도 지원하기 위해 nico랑은 다른 regular expression 사용
-        let hashtags = null;
+        let hashtagsObj = [];
         if(caption){
-          hashtags = caption.match(/#[\d|A-Z|a-z|ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+/g);
+          hashtagsObj = hashtagConnectOrCreate(caption);
         }
-        const hashtagObj = hashtags.map(hashtag => ({
-          where: {hashtag},
-          create: {hashtag}
-        }));
-
         // loggedInUser의 id를 가진 Photo 생성해내기
         const newPhoto = client.photo.create({
           data: {
