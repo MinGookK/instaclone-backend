@@ -566,16 +566,17 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] Edit Photo
 - [x] Like / Unlike Photo
 - [x] See Photo Likes
-- [ ] See Photo Comments **\*\***여기부터 할거야**\*\*\***
+- [x] See Photo Comments
 - [x] See Feed
 - [x] See Photo isMine
+- [ ] Delete Photo
 
 ## Comments
 
 - [x] Comments on Photo
 - [ ] Edit Comment
 - [ ] Delete Comment
-- [ ] See Comments isMine
+- [x] See Comments isMine
 
 ## Extras
 
