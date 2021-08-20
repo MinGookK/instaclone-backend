@@ -7,13 +7,13 @@ export default {
     // Photo의 id를 가져와서 hashtag에 photos에 id가 일치하는게 하나라도 있는 hashtag를 return함
     hashtags: ({id}) => client.hashtag.findMany({where:{photos:{some:{id}}}}),
     // photo의 id와 Like의 photoId가 일치하면 count하도록 만들기
-    totalLike: (root) => {
-      console.log(root);
+    totalLike: ({id}) => {
       return client.like.count({
       where:{
-        photoId: root.id
+        photoId: id
       }
     })},
+    comments: ({id}) => client.comment.count({where:{photoId:id}}),
     // Photo의 userId와 loggedInUser의 Id가 일치하면 true, 아니면 false
     isMine: ({ userId }, _, { loggedInUser }) => userId === loggedInUser.id
   },

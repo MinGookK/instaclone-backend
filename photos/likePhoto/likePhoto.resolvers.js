@@ -22,7 +22,8 @@ export default {
               photoId: id,
               userId: loggedInUser.id
             }
-          }
+          },
+          select:{id}
         });
         if(ok){
           await client.like.delete({
