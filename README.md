@@ -316,6 +316,19 @@ datasource 는 Prisma에게 데이터베이스의 주소와 종류에 대해 알
 
 client는 어떻게 db랑 상호작용하는가 에 대한 것.
 
+### onDelete CASCADE 적용하기 (https://www.prisma.io/docs/concepts/components/prisma-schema/relations/referential-actions#referential-action-defaults)
+
+**2.26.0** version 부터 사용이 가능하다.
+
+데이터베이스를 지우거나 업데이트 할 때 종속되어 있는 데이터들이 함께 삭제되길 원할 수 있다.
+예를 들어 Photo 를 지운다면 그 photo에 종속되어 있는 like들은 함께 지워져야 할 것이다.
+
+그래서 단순히 prisma.photo.delete를 하게 되면 like라는 관계형 데이터 때문에 지울 수 없다고 에러가 난다.
+이전에는 prisma가 onDelete를 지원하지 않아 직접 연결된 데이터를 삭제해 주어야 했지만
+이젠 preview Feature를 활성화 시켜줌으로 onDelete가 사용이 가능해졌다.
+
+> deletePhoto 만들 때, hashtag들도 photo가 지워지면 지워져야 되지 않나 했는데 생각해보니 photo는 n:n 구조이기 때문에 photo하나 지운다고 hashtag가 없어질 수 는 없었다. ondelete cascade 할 때는 1:n 관계의 database에서 1쪽에 작성해 주어야 하겠다.
+
 ### some, OR 차이
 
 ### select( find할 때 일부 필드만 가져오기 )
@@ -570,11 +583,12 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] See Feed
 - [x] See Photo isMine
 - [x] Delete Photo / ondelete cascade 사용하기.
+- [ ] Delete Photo 해서 hashtag에 photo가 0개가 되는 hashtag 삭제하기
 
 ## Comments
 
 - [x] Comments on Photo
-- [ ] Edit Comment
+- [x] Edit Comment
 - [ ] Delete Comment
 - [x] See Comments isMine
 
@@ -582,4 +596,4 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 
 - [ ] S3 Image Upload
 - [x] use mutationResult
-- [ ] refactor protectedResolvers in query case
+- [x] refactor protectedResolvers in query case
