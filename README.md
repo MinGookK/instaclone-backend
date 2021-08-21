@@ -569,7 +569,7 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] See Photo Comments
 - [x] See Feed
 - [x] See Photo isMine
-- [ ] Delete Photo
+- [x] Delete Photo / ondelete cascade 사용하기.
 
 ## Comments
 
@@ -581,3 +581,5 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 ## Extras
 
 - [ ] S3 Image Upload
+- [x] use mutationResult
+- [ ] refactor protectedResolvers in query case

@@ -23,7 +23,7 @@ export default {
         // 2. 있다면 새로운 caption으로 업데이트 한다.
         // 2-1. 이전 hashtags를 모두 disconnect 한다.
         // 2-2. 받은 caption에 있는 hashtags를 createOrConnect한다.
-        const photo = await client.photo.update({
+        await client.photo.update({
           where: {id},
           data:{
             caption,
@@ -34,8 +34,7 @@ export default {
           }
         });
         return {
-          ok: true,
-          photo
+          ok: true
         }
       }
     )

@@ -2,8 +2,6 @@ import { gql } from 'apollo-server';
 
 export default gql`
   type Mutation{
-    followUser(
-      username: String!
-    ): mutationResult!
+    deletePhoto(id:Int):mutationResult!
   }
 `

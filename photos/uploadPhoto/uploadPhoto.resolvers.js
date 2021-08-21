@@ -20,7 +20,7 @@ export default {
           hashtagsObj = hashtagConnectOrCreate(caption);
         }
         // loggedInUser의 id를 가진 Photo 생성해내기
-        const newPhoto = client.photo.create({
+        await client.photo.create({
           data: {
             file,
             caption,
@@ -30,17 +30,16 @@ export default {
                 id: loggedInUser.id
               }
             },
-            ...( hashtagObj.length>0 && {hashtags:{
+            ...( hashtagsObj.length>0 && {hashtags:{
               //hashtag는 이미 존재한다면 그 곳과 connect하고 없다면 create하기 위해 connectOrCreate 사용.
               //connectOrCreate를 multiple로 적용할 때는 Array로 전달하면 됨.
-              connectOrCreate: hashtagObj
+              connectOrCreate: hashtagsObj
               //photos는 지금 Photo 를 create 하고있어서 자동으로 연결 됨.
             }})
           }
         });
         return {
           ok: true,
-          photo: newPhoto
         }
       }
     )

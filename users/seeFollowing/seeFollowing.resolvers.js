@@ -21,10 +21,7 @@ export default {
         ...(lastId && {cursor: {id: lastId}})
       });
       
-      return {
-        ok: true,
-        following,
-      };
+      return following
     }
   },
 }
