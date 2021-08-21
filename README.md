@@ -569,6 +569,7 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] Computed Field 작성
 - [x] Change Avatar (Image Upload)
 - [x] Search User
+- [ ] delete User (comment, photo, like 다 지워지게 하기 / onDelete CASCADE)
 
 ## Photos
 
@@ -589,7 +590,7 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 
 - [x] Comments on Photo
 - [x] Edit Comment
-- [ ] Delete Comment
+- [x] Delete Comment
 - [x] See Comments isMine
 
 ## Extras
