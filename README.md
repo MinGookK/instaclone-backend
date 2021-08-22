@@ -598,3 +598,14 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [ ] S3 Image Upload
 - [x] use mutationResult
 - [x] refactor protectedResolvers in query case
+
+## Direct Message
+
+- [x] Model generate (Room, Message)
+- [x] Create Room
+- [x] send message
+- [ ] See Rooms (대화방 목록을 보는 resolver를 만들기)
+- [ ] See Room (대화방 하나를 클릭한 이후에 resolver)
+- [ ] Computed Fields
+- [ ] Read Message
+- [ ] Realtime Messages
