@@ -604,8 +604,8 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] Model generate (Room, Message)
 - [x] Create Room
 - [x] send message
-- [ ] See Rooms (대화방 목록을 보는 resolver를 만들기)
-- [ ] See Room (대화방 하나를 클릭한 이후에 resolver)
-- [ ] Computed Fields
+- [x] See Rooms (대화방 목록을 보는 resolver를 만들기)
+- [x] See Room (대화방 하나를 클릭한 이후에 resolver)
+- [ ] Computed Fields (unreadTotal)
 - [ ] Read Message
 - [ ] Realtime Messages
