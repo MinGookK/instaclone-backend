@@ -201,6 +201,50 @@ export default {
 
 ## GraphQL
 
+### subscription(https://www.apollographql.com/docs/react/data/subscriptions/)
+
+**Get real-time updates from your GraphQL server**
+**Subscriptions are useful for notifying your client in real time about changes to back-end data, such as the creation of a new object or updates to an important field.**
+
+Subscription을 사용하면 real time으로 어떤 객체가 추가되거나 field가 update되는 것을 listen할 수 있다.
+
+graphql 에서 Query와 Mutation에 추가로 Subscription type을 지원한다.
+Subscription을 사용하는 때에 대한 공식문서의 추천은 다음과 같다.
+
+- Small, incremental changes to large objects. Repeatedly polling for a large object is expensive, especially when most of the object's fields rarely change. Instead, you can fetch the object's initial state with a query, and your server can proactively push updates to individual fields as they occur. (커다란 obj에서 무언가 점진적인 change가 있는 경우, 좋아요, 댓글 수 와 같은 것을 실시간으로 업데이트한다.)
+
+- Low-latency, real-time updates. For example, a chat application's client wants to receive new messages as soon as they're available. (저지연, 실시간 업데이트를 관찰할 때, 채팅어플리케이션 같은 실시간 구현에 사용)
+
+#### Defining a subscription
+
+**https://www.apollographql.com/docs/apollo-server/data/subscriptions/#enabling-subscriptions**
+(Apollo Server 3.0 부터는 subscription을 자동으로 지원하지 않는다. 필요하다면 공식문서를 참고하여 환경설정을 하자.)
+
+Query, Mutation과 같이 server와 client에 모두 Subscription에 대해 정의해두어야 합니다.
+
+1. ServerSide
+
+```js
+type Subscription {
+  commentAdded(postID: ID!): Comment
+}
+```
+
+이렇게 typeDefs를 작성하면 commentAdded는 postID가 ID인 Comment를 listen하는 Subscription이다.
+
+2. Client Side
+
+```js
+const COMMENTS_SUBSCRIPTION = gql`
+  subscription OnCommentAdded($postID: ID!) {
+    commentAdded(postID: $postID) {
+      id
+      content
+    }
+  }
+`;
+```
+
 ### graphql apollo express
 
 graphql로 완벽히 개발된 api에서는 apollo 만으로 충분하지만, rest나 soket IO를 실시간으로 사용하는 경우도 생길 것임.
@@ -606,6 +650,6 @@ context를 함수로 사용하면 시작 변수로 request와 resolver를 받을
 - [x] send message
 - [x] See Rooms (대화방 목록을 보는 resolver를 만들기)
 - [x] See Room (대화방 하나를 클릭한 이후에 resolver)
-- [ ] Computed Fields (unreadTotal)
-- [ ] Read Message
-- [ ] Realtime Messages
+- [x] Computed Fields (unreadTotal)
+- [x] Read Message
+- [x] Realtime Messages

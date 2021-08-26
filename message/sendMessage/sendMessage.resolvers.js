@@ -1,4 +1,6 @@
 import client from '../../client';
+import { NEW_MESSAGE } from '../../constants';
+import pubsub from '../../pubsub';
 import { protectedResolver } from '../../users/users.utils';
 
 export default {
@@ -6,7 +8,6 @@ export default {
     sendMessage: protectedResolver(
       async (_, { payload, roomId, userId }, { loggedInUser }) => {
         // 기본적으로 message data를 create 한다.
-        console.log(payload, roomId, userId, loggedInUser.id)
         let room = null;
         if(!roomId && !userId){
           return{
@@ -56,13 +57,14 @@ export default {
           }
         }
         // message를 생성한다.
-        await client.message.create({
+        const message = await client.message.create({
           data:{
             payload,
             user:{connect:{id:loggedInUser.id}},
             room:{connect:{id:room.id}}
           }
         });
+        pubsub.publish(NEW_MESSAGE,{roomUpdates: message});
         return{
           ok: true
         }
