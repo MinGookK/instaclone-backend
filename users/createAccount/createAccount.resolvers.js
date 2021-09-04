@@ -18,18 +18,24 @@ export default {
         }
         });
         if(existUser){
-          throw new Error('username 혹은 email이 이미 존재합니다.')
+          return{
+            ok: false,
+            error: "user가 존재합니다."
+          }
         }
         // password hash
         const hashedPassword = await bcrypt.hash( password, 10 );
         // save & return user
-        return client.user.create({data : {
+        await client.user.create({data : {
           firstName,
           lastName,
           username,
           email,
           password: hashedPassword
         }});
+        return{
+          ok: true
+        }
       }catch(e){
         return {
           ok: false,
